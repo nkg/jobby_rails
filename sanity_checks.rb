@@ -34,7 +34,7 @@ class SanityChecks
   def self.jobby_jobs_table_exists
     ActiveRecord::Base.establish_connection(YAML::load(IO.read(RAILS_ROOT + '/config/database.yml'))[RAILS_ENV.downcase])
     if not ActiveRecord::Base.connection.tables.include?('jobby_jobs')
-      @@errors << "'jobby_jobs' table not found. Run migration!"
+      @@errors << "'jobby_jobs' table not found. Run script/generate jobby_job"
     end
   end
 
