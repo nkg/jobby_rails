@@ -1,4 +1,4 @@
-# Copyright (C) 2009  Ryan Stenhouse 
+# Copyright (C) 2009  Ryan Stenhouse
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -33,7 +33,7 @@ class SanityChecks
 
   def self.jobby_jobs_table_exists
     ActiveRecord::Base.establish_connection(YAML::load(IO.read(RAILS_ROOT + '/config/database.yml'))[RAILS_ENV.downcase])
-    if not ActiveRecord::Base.connection.tables.include?('jobby_jobs') 
+    if not ActiveRecord::Base.connection.tables.include?('jobby_jobs')
       @@errors << "'jobby_jobs' table not found. Run migration!"
     end
   end
@@ -56,20 +56,11 @@ class SanityChecks
   def self.error_banner
     return <<-ERR
 
-Warning! Jobby Rails has not been correctly installed!    
+Warning! Jobby Rails has not been correctly installed!
 ------------------------------------------------------
 
-After installing the plugin, there is a rake task which
-needs to be run to make sure the required assets are
-copied accross and all manner of other fun things are
-set up.
-
-If you aren't bothered about the specific problem, run
-rake jobby_rails:install and it'll do the steps that
-need to be completed to install.
-
   ERR
-  
+
   end
 
 end
