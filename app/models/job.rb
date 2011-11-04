@@ -33,8 +33,10 @@ module Jobby
       find(:all, :conditions => [ 'user_id = ? AND created_at > ?', user_id, cut_off_time ], :order => "id DESC", :limit => 3)
     end 
 
-    #  Returns the count of jobs submitted by the specified User.
-    #
+    def self.can_display_jobs_for?(user_id)
+      count(:id, :conditions => [ 'user_id = ? AND created_at > ?', user_id, cut_off_time ], :order => "id DESC", :limit => 5) > 0
+    end
+
     def self.count_jobs_for_user(user_id)
       count(:id, :conditions =>  [ 'user_id = ?', user_id ])
     end
