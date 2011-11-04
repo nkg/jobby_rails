@@ -1,4 +1,4 @@
-# Copyright (C) 2008 - 2009 Ryan Stenhouse & Mark Somerville 
+# Copyright (C) 2008 - 2009 Ryan Stenhouse & Mark Somerville
 #
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
@@ -14,11 +14,11 @@
 # License along with this library; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
-require 'activerecord'
+require 'active_record'
 
 module Jobby
   class Job < ActiveRecord::Base
-    
+
     set_table_name :jobby_jobs
 
     belongs_to :user
@@ -31,7 +31,7 @@ module Jobby
     #
     def self.jobs_for_user(user_id)
       find(:all, :conditions => [ 'user_id = ? AND created_at > ?', user_id, cut_off_time ], :order => "id DESC", :limit => 3)
-    end 
+    end
 
     def self.can_display_jobs_for?(user_id)
       count(:id, :conditions => [ 'user_id = ? AND created_at > ?', user_id, cut_off_time ], :order => "id DESC", :limit => 5) > 0
@@ -41,7 +41,7 @@ module Jobby
       count(:id, :conditions =>  [ 'user_id = ?', user_id ])
     end
 
-    #  Adds a job to the jobby_jobs table and returns the created Job object. 
+    #  Adds a job to the jobby_jobs table and returns the created Job object.
     #  Expects the underscores version of the freelancer's name, minus the text
     #  'freelancer'.
     #
@@ -56,7 +56,7 @@ module Jobby
       job.save!
       return job
     end
-    
+
     # Pulls out the next job which is currently NEW for execution. As this method is only
     # used by the Dispatcher to run the Job, the stus is automatically updated to RUNNING.
     # Returns nil if there are no jobs.
@@ -72,7 +72,7 @@ module Jobby
     def running?
       self.status == 'RUNNING'
     end
-    
+
     # Four ours ago, formatted as a MySQL DateTime string.
     #
     def self.cut_off_time
@@ -95,7 +95,7 @@ module Jobby
     #
     def message
       if progress_message.include?('||')
-        m = progress_message.split('||').last    
+        m = progress_message.split('||').last
         if using_split_progress?
           m = m.split('***').first
         end
@@ -104,7 +104,7 @@ module Jobby
         progress_message
       end
     end
-    
+
     # Parses out the overall number of stages for this task from the
     # progress_message string.
     #
@@ -116,7 +116,7 @@ module Jobby
         1
       end
     end
-    
+
     # Parses out the overall current stage for this task from the
     # progress_message string.
     #
@@ -147,7 +147,7 @@ module Jobby
     def using_split_progress?
       (progress_message.include?('***') && progress_message.include?('^^'))
     end
-  
+
     # If we are using_split_progress?, parses out the current step we're on for this stage.
     #
     def stage_current_step
@@ -169,7 +169,7 @@ module Jobby
         2
       end
     end
-    
+
     # Calculates the current stage's percentage of completion.
     #
     def stage_percentage
@@ -184,7 +184,7 @@ module Jobby
       end
       @unmarshalled_args
     end
-    
+
     # Marshalls the value(s) passed in and saves them in the database.
     #
     def args=(*something)
