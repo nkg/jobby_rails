@@ -19,11 +19,6 @@
 #
 logger.formatter  = Logger::Formatter.new
 
-# Turn on AR's 'thread safety' stuff. All this means is that AR should
-# play nicer with everything.
-#
-ActiveRecord::Base.allow_concurrency = true
-
 # Dispatch a Job using Jobby::Dispatcher
 #
 Jobby::Dispatcher.dispatch_job(logger)
